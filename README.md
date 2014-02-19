@@ -26,4 +26,4 @@ These streams analyse requests and responses to generate reports and statistics.
 - `progressDots()` : print a dot for each request sent
 - `print()` : print every request/response going through
 - `consoleSummary()` : print general stats to the console
-
+- `afterAll(fn)` : call a callback when all responses have arrived

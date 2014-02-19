@@ -10,4 +10,9 @@ emit(r)
 .pipe(stopCount(13))
 .pipe(progressDots())
 .pipe(consoleSummary())
+.pipe(afterAll(finished))
 .pipe(send());
+
+function finished() {
+  console.log('the end!');
+}
