@@ -5,8 +5,9 @@ var r = request.get('http://localhost:3000/hello')
                .header('Accept', 'application/json');
 
 emit(r)
-.pipe(perSecond(6))
-.pipe(stopCount(20))
+.pipe(perSecond(3))
+.pipe(times(5))
+.pipe(stopCount(13))
 .pipe(progressDots())
 .pipe(consoleSummary())
 .pipe(send());
