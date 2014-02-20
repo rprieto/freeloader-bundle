@@ -5,7 +5,8 @@ They're roughly divided into 3 categories:
 
 ## Emitters
 
-These streams generate 1 or more requests from their input. You'll usually use 1 emitter only, but some support being combined together.
+These streams generate 1 or more requests from their input.
+You'll usually use 1 emitter only, but some support being combined together.
 
 - `times(5)` : fire 5 requests instead of a single one
 - `perSecond(10)` : generate 10 requests per second
@@ -14,16 +15,19 @@ These streams generate 1 or more requests from their input. You'll usually use 1
 
 ## Stop conditions
 
-These can force the whole pipeline to stop on a certain condition.
+These can force upstream modules to stop on a certain condition.
+They **must** be placed downstream from emitting modules like `perSecond()`.
 
 - `stopTimer('10s')` : stop after 10 seconds
 - `stopCount(50)` : stop after 50 responses have been received
 
 ## Reporters
 
-These streams analyse requests and responses to generate reports and statistics. You can pipe several reporters one after the other.
+These streams analyse requests and responses to generate reports and statistics.
+You can pipe several reporters one after the other.
 
 - `progressDots()` : print a dot for each request sent
 - `print()` : print every request/response going through
 - `consoleSummary()` : print general stats to the console
-- `afterAll(fn)` : call a callback when all responses have arrived
+- `callback(fn)` : call a callback when all responses have arrived (`callback(err)`)
+- `then(fn, fn)` : promise-like handler when all responses have arrived (`resolved(), rejected()`)
