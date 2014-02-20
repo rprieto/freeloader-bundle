@@ -67,7 +67,8 @@ describe('Integration', function() {
 
   it('can print console charts', function(done) {
     emit(r1)
-    .pipe(times(5))
+    .pipe(perSecond(20))
+    .pipe(stopCount(50))
     .pipe(progressDots())
     .pipe(consoleCharts())
     .pipe(callback(done))
