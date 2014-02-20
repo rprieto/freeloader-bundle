@@ -65,4 +65,13 @@ describe('Integration', function() {
     .pipe(send());
   });
 
+  it('can print console charts', function(done) {
+    emit(r1)
+    .pipe(times(5))
+    .pipe(progressDots())
+    .pipe(consoleCharts())
+    .pipe(callback(done))
+    .pipe(send());
+  });
+
 });

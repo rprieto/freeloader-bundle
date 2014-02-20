@@ -30,7 +30,8 @@
     "ms": "~0.6.2",
     "fast-stats": "0.0.2",
     "change-case": "~1.0.6",
-    "wrench": "~1.5.7"
+    "wrench": "~1.5.7",
+    "babar": "0.0.3"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
