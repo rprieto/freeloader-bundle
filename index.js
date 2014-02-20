@@ -1,4 +1,4 @@
-var fs          =  require('fs');
+var wrench      = require('wrench');
 var path        = require('path');
 var changeCase  = require('change-case');
 
@@ -7,14 +7,18 @@ var changeCase  = require('change-case');
 // my-module  ->  streams.myModule
 //
 
-var files = fs.readdirSync(path.join(__dirname, 'lib'));
-var streams = files.reduce(function(memo, filename) {
-  var name = path.basename(filename, '.js');
-  var fullPath = path.resolve(path.join(__dirname, 'lib', filename));
-  var key = changeCase.camelCase(name);
-  memo[key] = require(fullPath);
+var files = wrench.readdirSyncRecursive('lib');
+
+var streams = files.reduce(function(memo, filepath) {
+  if (filepath.match(/\.js$/)) {
+    var name = path.basename(filepath, '.js');
+    var fullpath = path.resolve(path.join('lib', filepath));
+    var key = changeCase.camelCase(name);
+    memo[key] = require(fullpath);
+  }
   return memo;
 }, {});
+
 
 //
 // Helper to put all streams in global scope

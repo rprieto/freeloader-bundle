@@ -29,7 +29,8 @@
     "lodash": "~2.4.1",
     "ms": "~0.6.2",
     "fast-stats": "0.0.2",
-    "change-case": "~1.0.6"
+    "change-case": "~1.0.6",
+    "wrench": "~1.5.7"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
