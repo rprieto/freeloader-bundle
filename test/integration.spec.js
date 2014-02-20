@@ -8,7 +8,7 @@ describe('Integration', function() {
   this.timeout(10000);
 
   before(function() {
-    fs.mkdir('./tmp');
+    fs.mkdir('./tmp', function() {});
   });
 
   var r1 = request.get('http://localhost:3000/hello')
