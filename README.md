@@ -29,5 +29,6 @@ You can pipe several reporters one after the other.
 - `progressDots()` : print a dot for each request sent
 - `print()` : print every request/response going through
 - `consoleSummary()` : print general stats to the console
+- `jsonSummary(path)` : save general stats to disk (JSON)
 - `callback(fn)` : call a callback when all responses have arrived (`callback(err)`)
 - `then(fn, fn)` : promise-like handler when all responses have arrived (`resolved(), rejected()`)

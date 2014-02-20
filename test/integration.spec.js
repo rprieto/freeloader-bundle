@@ -1,3 +1,4 @@
+var fs = require('fs');
 require('freeloader').global();
 require('../index').global();
 
@@ -5,6 +6,10 @@ describe('Integration', function() {
 
   this.slow(10000);
   this.timeout(10000);
+
+  before(function() {
+    fs.mkdir('./tmp');
+  });
 
   var r1 = request.get('http://localhost:3000/hello')
                   .header('Accept', 'application/json');
@@ -47,6 +52,15 @@ describe('Integration', function() {
     .pipe(stopTimer('3s'))
     .pipe(progressDots())
     .pipe(consoleSummary())
+    .pipe(callback(done))
+    .pipe(send());
+  });
+
+  it('can write a JSON summary to disk', function(done) {
+    emit(r1)
+    .pipe(times(5))
+    .pipe(progressDots())
+    .pipe(jsonSummary('./tmp/test-results.json'))
     .pipe(callback(done))
     .pipe(send());
   });
