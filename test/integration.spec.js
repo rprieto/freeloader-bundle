@@ -81,4 +81,29 @@ describe('Integration', function() {
     .pipe(send());
   });
 
+  it('can print successful response dots', function(done) {
+    emit(r1)
+    .pipe(perSecond(10))
+    .pipe(stopCount(20))
+    .pipe(progressDots())
+    .pipe(responseDots())
+    .pipe(callback(done))
+    .pipe(send());
+  });
+
+  it('can print failure response dots', function(done) {
+    server.setResponseCode(500);
+    var finish = function(err) {
+      server.setResponseCode(200);
+      done(); //Don't send err to done because we are expecting errors
+    }
+    emit(r1)
+    .pipe(perSecond(10))
+    .pipe(stopCount(20))
+    .pipe(progressDots())
+    .pipe(responseDots())
+    .pipe(callback(finish))
+    .pipe(send());
+  });
+
 });

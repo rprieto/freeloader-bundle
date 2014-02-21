@@ -27,6 +27,7 @@ These streams analyse requests and responses to generate reports and statistics.
 You can pipe several reporters one after the other.
 
 - `progressDots()` : print a dot for each request sent
+- `responseDots()` : print a green o for each successful response or red x for each unsuccessful response
 - `print()` : print every request/response going through
 - `consoleSummary()` : print general stats to the console
 - `jsonSummary(path)` : save general stats to disk (JSON)
