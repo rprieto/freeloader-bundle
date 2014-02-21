@@ -1,4 +1,5 @@
 var fs = require('fs');
+var server = require('./server');
 require('freeloader').global();
 require('../index').global();
 
@@ -7,8 +8,13 @@ describe('Integration', function() {
   this.slow(10000);
   this.timeout(10000);
 
-  before(function() {
+  before(function(done) {
     fs.mkdir('./tmp', function() {});
+    server.get().listen(3000, done)
+  });
+
+  after(function() {
+    server.get().close();
   });
 
   var r1 = request.get('http://localhost:3000/hello')
@@ -72,6 +78,31 @@ describe('Integration', function() {
     .pipe(progressDots())
     .pipe(consoleCharts())
     .pipe(callback(done))
+    .pipe(send());
+  });
+
+  it('can print successful response dots', function(done) {
+    emit(r1)
+    .pipe(perSecond(10))
+    .pipe(stopCount(20))
+    .pipe(progressDots())
+    .pipe(responseDots())
+    .pipe(callback(done))
+    .pipe(send());
+  });
+
+  it('can print failure response dots', function(done) {
+    server.setResponseCode(500);
+    var finish = function(err) {
+      server.setResponseCode(200);
+      done(); //Don't send err to done because we are expecting errors
+    }
+    emit(r1)
+    .pipe(perSecond(10))
+    .pipe(stopCount(20))
+    .pipe(progressDots())
+    .pipe(responseDots())
+    .pipe(callback(finish))
     .pipe(send());
   });
 
