@@ -1,4 +1,5 @@
 var fs = require('fs');
+var server = require('./server');
 require('freeloader').global();
 require('../index').global();
 
@@ -7,8 +8,13 @@ describe('Integration', function() {
   this.slow(10000);
   this.timeout(10000);
 
-  before(function() {
+  before(function(done) {
     fs.mkdir('./tmp', function() {});
+    server.get().listen(3000, done)
+  });
+
+  after(function() {
+    server.get().close();
   });
 
   var r1 = request.get('http://localhost:3000/hello')
