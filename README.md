@@ -1,5 +1,7 @@
 # freeloader-bundle
 
+![Travis CI status](https://api.travis-ci.org/rprieto/freeloader-bundle.png)
+
 Collection of streams for [freeloader](https://github.com/rprieto/freeloader).
 They're roughly divided into 3 categories:
 
