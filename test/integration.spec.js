@@ -17,6 +17,10 @@ describe('Integration', function() {
     server.get().close();
   });
 
+  beforeEach(function() {
+    server.setResponseCode(200);
+  });
+
   var r1 = request.get('http://localhost:3000/hello')
                   .header('Accept', 'application/json');
 
@@ -62,6 +66,18 @@ describe('Integration', function() {
     .pipe(send());
   });
 
+  it('can maintain X concurrent requests', function(done) {
+    emit(r1)
+    .pipe(concurrent(5))
+    .pipe(stopCount('30'))
+    .pipe(progressDots())
+    .pipe(responseDots())
+    .pipe(consoleSummary())
+    .pipe(callback(done))
+    .pipe(send());
+  });
+
+
   it('can write a JSON summary to disk', function(done) {
     emit(r1)
     .pipe(times(5))
@@ -94,8 +110,8 @@ describe('Integration', function() {
   it('can print failure response dots', function(done) {
     server.setResponseCode(500);
     var finish = function(err) {
-      server.setResponseCode(200);
-      done(); //Don't send err to done because we are expecting errors
+      // Don't call done(err) because we are expecting errors
+      done();
     }
     emit(r1)
     .pipe(perSecond(10))

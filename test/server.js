@@ -1,11 +1,7 @@
 var http = require('http');
 var pad  = require('pad');
 
-var responseCode = 200
-
-function setResponseCode(code) {
-  responseCode = code;
-}
+var responseCode = 200;
 
 function handler(req, res) {
   var delay = Math.floor(Math.random() * 500);
@@ -18,8 +14,10 @@ function handler(req, res) {
 
 var server = http.createServer(handler);
 
-module.exports.get = function() {
+exports.setResponseCode = function(code) {
+  responseCode = code;
+};
+
+exports.get = function() {
   return server;
 }
-module.exports.setResponseCode = setResponseCode;
-
